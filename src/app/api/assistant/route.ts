@@ -3,9 +3,11 @@ import { z } from "zod";
 import { askAirQualityAssistant } from "@/lib/gemini";
 import { assistantRateLimiter } from "@/lib/rateLimit";
 
+import { sanitizeText } from "@/lib/sanitize";
+
 const bodySchema = z.object({
   persona: z.enum(["parent", "elderly", "worker", "community"]).default("parent"),
-  locationName: z.string().trim().min(1).max(100).default("Your Location"),
+  locationName: z.string().transform((v) => sanitizeText(v, 100)).default("Your Location"),
   aqi: z.number().nullable().optional().default(null),
   category: z.string().nullable().optional().default(null),
   pollutants: z
@@ -18,7 +20,7 @@ const bodySchema = z.object({
       o3: z.number().nullable().optional().default(null),
     })
     .default({}),
-  question: z.string().trim().min(2).max(1000),
+  question: z.string().transform((v) => sanitizeText(v, 1000)).refine((v) => v.length >= 2, { message: "Question too short" }),
   apiKey: z.string().trim().max(250).optional(),
 });
 

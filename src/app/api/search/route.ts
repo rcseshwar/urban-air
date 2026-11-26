@@ -5,8 +5,10 @@ import { TtlCache } from "@/lib/cache";
 import { ProviderError, type Location } from "@/lib/types";
 import { apiRateLimiter } from "@/lib/rateLimit";
 
+import { sanitizeSearchQuery } from "@/lib/sanitize";
+
 const querySchema = z.object({
-  q: z.string().trim().min(2).max(100),
+  q: z.string().transform((val) => sanitizeSearchQuery(val)).refine((v) => v.length >= 2, { message: "Query too short" }),
 });
 
 const provider = new OpenMeteoProvider();
