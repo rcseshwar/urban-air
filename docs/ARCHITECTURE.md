@@ -35,7 +35,7 @@
 - Vulnerable neighbor welfare check protocol and school recess safety guidelines.
 
 ### 6. Gemini Environmental Health Assistant
-- Server-side route `/api/assistant` powered by Gemini 1.5 Flash (`GEMINI_API_KEY` or user-configured key).
+- Server-side route `/api/assistant` powered by Gemini 3.8 Flash (`GEMINI_API_KEY` or user-configured key).
 - **Frontend Key Configuration**: Users can enter, inspect (show/hide), and save their personal Gemini API key directly via the UI; keys persist client-side in `localStorage` and override or supplement server keys.
 - Persona-tailored prompt engineering with evidence-based WHO and EPA air quality guidelines.
 - Resilient clinical heuristic fallback engine ensuring 100% availability even without an external API key or during network disruptions.
